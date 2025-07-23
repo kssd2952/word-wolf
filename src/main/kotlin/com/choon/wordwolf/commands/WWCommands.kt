@@ -71,6 +71,8 @@ class WWCommands : CommandExecutor {
 
                     if (currentRule == null) {
                         sender.sendMessage("해당 규칙을 찾을 수 없습니다")
+                    } else if (WordWolf.gameRules[args[1]] == args[2]) {
+                        sender.sendMessage("게임 규칙 ${args[2]}는 이미 ${WordWolf.gameRules[args[1]]}입니다")
                     } else {
                         WordWolf.gameRules[args[1]] = args[2]
                         sender.sendMessage("게임 규칙 ${args[1]}을 ${WordWolf.gameRules[args[1]]}로 변경했습니다")
