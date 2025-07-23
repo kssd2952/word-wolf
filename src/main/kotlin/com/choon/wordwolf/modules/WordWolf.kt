@@ -1,16 +1,26 @@
 package com.choon.wordwolf.modules
 
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.title.Title
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
+import java.time.Duration
 
-object WordWolf : JavaPlugin() {
-    val playerList: MutableList<Player> = mutableListOf()
-    val gameRules = mutableMapOf<String, String>()
-    val topics = mutableMapOf<String, List<String>>()
 
-    var isGameStarted: Boolean = false
-    var isVoteStarted: Boolean = false
+class WordWolf : JavaPlugin() {
+    companion object {
+        val playerList: MutableList<Player> = mutableListOf()
+        val gameRules = mutableMapOf<String, String>()
+        val topics = mutableMapOf<String, List<String>>()
+
+        var isGameStarted: Boolean = false
+        var isVoteStarted: Boolean = false
+
+        val topicList: List<String> = listOf(
+            "sports", "instruments", "foods", "animals", "jobs", "fruits", "countries", "colors", "cities", "subjects"
+        )
+    }
 
     init {
         logger.info("WordWolf object loaded")
@@ -38,33 +48,25 @@ object WordWolf : JavaPlugin() {
     }
 
     fun startGame() {
-        val usedTopic: List<String>? = if (gameRules["wordTopic"] == "RANDOM") {
-            val topicList: List<String> = listOf(
-                "sports",
-                "instruments",
-                "foods",
-                "animals",
-                "jobs",
-                "fruits",
-                "countries",
-                "colors",
-                "cities",
-                "subjects"
-            )
-            val randomNum = (Math.random() * topicList.size).toInt()
-            topics[topicList[randomNum]]
+        val wordList: List<String>? = if (gameRules["wordTopic"] == "RANDOM") {
+            topics[topicList[(Math.random() * topicList.size).toInt()]]
         } else {
             topics[gameRules["wordTopic"]]
         }
 
+        val playerWord = wordList?.get((Math.random() * wordList.size).toInt())
+        var wolfWord = wordList?.get((Math.random() * wordList.size).toInt())
+        while (wolfWord == playerWord) {
+            wolfWord = wordList?.get((Math.random() * wordList.size).toInt())
+        }
+
         for (player in playerList) {
-            player.sendTitle(
-                "§a게임 시작!",     // 타이틀 (큰 글씨)
-                "§7당신의 단어는 ${usedTopic}입니다!",   // 서브타이틀 (작은 글씨)
-                10,                  // 페이드 인 시간 (ticks)
-                70,                  // 보여지는 시간 (ticks)
-                20
+            val title = Title.title(
+                Component.text("당신은 시민입니다!", NamedTextColor.GREEN),
+                Component.text("당신의 단어는 ${playerWord}입니다", NamedTextColor.GRAY),
+                Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(500))
             )
+            player.showTitle(title)
         }
     }
 
