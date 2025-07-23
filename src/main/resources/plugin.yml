@@ -1,0 +1,15 @@
+name: wordwolf
+main: com.choon.wordwolf.Main
+version: 0.1.2
+api-version: 1.21
+
+commands:
+  ww:
+    description: Word wolf plugin commands
+    usage: /<command>
+    permission: needop
+
+permissions:
+  needop:
+    description: Needs op
+    default: op
