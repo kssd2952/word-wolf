@@ -20,6 +20,37 @@ class WordWolf : JavaPlugin() {
         val topicList: List<String> = listOf(
             "sports", "instruments", "foods", "animals", "jobs", "fruits", "countries", "colors", "cities", "subjects"
         )
+
+        fun startGame() {
+            val wordList: List<String>? = if (gameRules["wordTopic"] == "RANDOM") {
+                topics[topicList[(Math.random() * topicList.size).toInt()]]
+            } else {
+                topics[gameRules["wordTopic"]]
+            }
+
+            val playerWord = wordList?.get((Math.random() * wordList.size).toInt())
+            var wolfWord = wordList?.get((Math.random() * wordList.size).toInt())
+            while (wolfWord == playerWord) {
+                wolfWord = wordList?.get((Math.random() * wordList.size).toInt())
+            }
+
+            for (player in playerList) {
+                val title = Title.title(
+                    Component.text("당신은 시민입니다!", NamedTextColor.GREEN),
+                    Component.text("당신의 단어는 ${playerWord}입니다", NamedTextColor.GRAY),
+                    Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(500))
+                )
+                player.showTitle(title)
+            }
+        }
+
+        fun gameVote() {
+
+        }
+
+        fun gameStop(target: String) {
+
+        }
     }
 
     init {
@@ -45,36 +76,5 @@ class WordWolf : JavaPlugin() {
         topics["colors"] = listOf("빨강", "파랑", "초록", "노랑", "검정", "하양", "주황", "보라", "분홍", "회색", "갈색", "청록")
         topics["cities"] = listOf("서울", "도쿄", "뉴욕", "파리", "런던", "베이징", "시드니", "베를린", "마드리드", "로마", "모스크바", "방콕")
         topics["subjects"] = listOf("수학", "과학", "역사", "영어", "지리", "미술", "음악", "물리", "화학", "생물", "철학", "경제", "도덕")
-    }
-
-    fun startGame() {
-        val wordList: List<String>? = if (gameRules["wordTopic"] == "RANDOM") {
-            topics[topicList[(Math.random() * topicList.size).toInt()]]
-        } else {
-            topics[gameRules["wordTopic"]]
-        }
-
-        val playerWord = wordList?.get((Math.random() * wordList.size).toInt())
-        var wolfWord = wordList?.get((Math.random() * wordList.size).toInt())
-        while (wolfWord == playerWord) {
-            wolfWord = wordList?.get((Math.random() * wordList.size).toInt())
-        }
-
-        for (player in playerList) {
-            val title = Title.title(
-                Component.text("당신은 시민입니다!", NamedTextColor.GREEN),
-                Component.text("당신의 단어는 ${playerWord}입니다", NamedTextColor.GRAY),
-                Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(500))
-            )
-            player.showTitle(title)
-        }
-    }
-
-    fun gameVote() {
-
-    }
-
-    fun gameStop(target: String) {
-
     }
 }
