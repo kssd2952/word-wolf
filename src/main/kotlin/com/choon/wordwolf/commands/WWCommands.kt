@@ -85,6 +85,34 @@ class WWCommands : CommandExecutor {
                 sender.sendMessage("현재 참여 플레이어 목록: $nameList")
             }
 
+            "start" -> {
+                WordWolf.isGameStarted = true
+                WordWolf.startGame()
+            }
+
+            "stop" -> {
+                if (WordWolf.isVoteStarted) {
+                    WordWolf.isVoteStarted = false
+                    WordWolf.gameStop("vote")
+                } else if (WordWolf.isGameStarted) {
+                    WordWolf.isGameStarted = false
+                    WordWolf.gameStop("game")
+                } else {
+                    sender.sendMessage("게임이나 투표가 시작되지 않았습니다")
+                    return true
+                }
+            }
+
+            "vote" -> {
+                if (!WordWolf.isGameStarted) {
+                    sender.sendMessage("게임이 시작되지 않았습니다")
+                    return true
+                }
+
+                WordWolf.isVoteStarted = true
+                WordWolf.gameVote()
+            }
+
             else -> {
                 sender.sendMessage("잘못된 사용방법입니다")
             }
