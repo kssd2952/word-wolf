@@ -13,7 +13,7 @@ class WWTabCompleter : TabCompleter {
         if (command.name != "ww") return null
 
         return when (args.size) {
-            1 -> listOf("join", "leave", "list", "rules").filter { it.startsWith(args[0], ignoreCase = true) }
+            1 -> listOf("join", "leave", "list", "rules", "start", "stop", "vote").filter { it.startsWith(args[0], ignoreCase = true) }
                 .toMutableList()
 
             2 -> when (args[0].lowercase()) {
@@ -26,24 +26,14 @@ class WWTabCompleter : TabCompleter {
             }
 
             3 -> when (args[1]) {
-                "wolfSelfAware" -> {
-                    mutableListOf("true", "false").filter { it.startsWith(args[1], ignoreCase = true) }.toMutableList()
-                }
-
-                "oneTurnGame" -> {
-                    mutableListOf("true", "false").filter { it.startsWith(args[1], ignoreCase = true) }.toMutableList()
+                "wolfSelfAware", "oneTurnGame", "wolfWordRelated", "wolfCanGuess" -> {
+                    listOf("true", "false")
+                        .filter { it.startsWith(args[2], ignoreCase = true) }
+                        .toMutableList()
                 }
 
                 "wordTopic" -> {
-                    mutableListOf("sports", "instruments", "foods", "animals", "jobs", "fruits", "countries", "colors", "cities", "subjects", "RANDOM").filter { it.startsWith(args[1], ignoreCase = true) }.toMutableList()
-                }
-
-                "wolfWordRelated" -> {
-                    mutableListOf("true", "false").filter { it.startsWith(args[1], ignoreCase = true) }.toMutableList()
-                }
-
-                "wolfCanGuess" -> {
-                    mutableListOf("true", "false").filter { it.startsWith(args[1], ignoreCase = true) }.toMutableList()
+                    listOf("sports", "instruments", "foods", "animals", "jobs", "fruits", "countries", "colors", "cities", "subjects", "RANDOM").filter { it.startsWith(args[2], ignoreCase = true) }.toMutableList()
                 }
 
                 else -> mutableListOf()
