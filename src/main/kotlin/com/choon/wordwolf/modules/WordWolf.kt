@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import java.time.Duration
 
 
-class WordWolf : JavaPlugin() {
+class WordWolf {
     companion object {
         val playerList: MutableList<Player> = mutableListOf()
         val gameRules = mutableMapOf<String, String>()
@@ -54,8 +54,6 @@ class WordWolf : JavaPlugin() {
     }
 
     init {
-        logger.info("WordWolf object loaded")
-
         //기본 gameRules
         gameRules["wolfSelfAware"] = "false" //울프는 본인이 라이어인 것을 알고 시작하는가?
         gameRules["oneTurnGame"] = "false" //한 번의 투표 후 게임이 종료되는가?
