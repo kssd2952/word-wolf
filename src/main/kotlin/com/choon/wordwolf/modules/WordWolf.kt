@@ -28,16 +28,9 @@ class WordWolf {
             "sports", "instruments", "foods", "animals", "jobs", "fruits", "countries", "colors", "cities", "subjects"
         )
 
-        var playerBossBar: BossBar = Bukkit.createBossBar(
-            "temp",
-            BarColor.GREEN,
-            BarStyle.SEGMENTED_10
-        )
-        var wolfBossBar: BossBar = Bukkit.createBossBar(
-            "temp",
-            BarColor.GREEN,
-            BarStyle.SEGMENTED_10
-        )
+        var playerBar: BossBar? = null
+        var wolfBar: BossBar? = null
+        var voteBar: BossBar? = null
 
         fun startGame() {
             val wordList: List<String>? = if (gameRules["wordTopic"] == "RANDOM") {
@@ -62,7 +55,7 @@ class WordWolf {
                             "당신의 단어는", NamedTextColor.GRAY
                         ).append(
                             Component.text(
-                                "${wolfWord}", NamedTextColor.BLUE
+                                "$wolfWord", NamedTextColor.BLUE
                             )
                         ).append(
                             Component.text(
@@ -81,7 +74,7 @@ class WordWolf {
                             "당신의 단어는", NamedTextColor.GRAY
                         ).append(
                             Component.text(
-                                "${playerWord}", NamedTextColor.BLUE
+                                "$playerWord", NamedTextColor.BLUE
                             )
                         ).append(
                             Component.text(
@@ -120,17 +113,13 @@ class WordWolf {
                 }
             }
 
-            for (player in Bukkit.getOnlinePlayers()) {
-                player.sendMessage(Component.text("워드울프 게임이 시작되었습니다!", NamedTextColor.GREEN))
-            }
-
-            playerBossBar = Bukkit.createBossBar(
+            playerBar = Bukkit.createBossBar(
                 "게임이 시작되었습니다! 당신의 단어: $playerWord",
                 BarColor.GREEN,
                 BarStyle.SEGMENTED_10
             )
 
-            wolfBossBar = Bukkit.createBossBar(
+            wolfBar = Bukkit.createBossBar(
                 "게임이 시작되었습니다! 당신의 단어: $wolfWord",
                 if (gameRules["wolfSelfAware"] == "true") {
                     BarColor.RED
@@ -142,10 +131,14 @@ class WordWolf {
 
             for (player in playerList) {
                 if (wolfList.contains(player)) {
-                    wolfBossBar.addPlayer(player)
+                    wolfBar!!.addPlayer(player)
                 } else {
-                    playerBossBar.addPlayer(player)
+                    playerBar!!.addPlayer(player)
                 }
+            }
+
+            for (player in Bukkit.getOnlinePlayers()) {
+                player.sendMessage(Component.text("워드울프 게임이 시작되었습니다!", NamedTextColor.GREEN))
             }
         }
 
@@ -158,6 +151,14 @@ class WordWolf {
             for (player in playerList) {
                 player.showTitle(title)
             }
+
+            voteBar = Bukkit.createBossBar(
+                "투표 시간압니다! 투표 시간: ${gameRules["voteTime"]}s",
+                BarColor.YELLOW,
+                BarStyle.SEGMENTED_10
+            )
+
+
             for (player in Bukkit.getOnlinePlayers()) {
                 player.sendMessage(
                     Component.text("투표가 시작되었습니다!", NamedTextColor.YELLOW)
@@ -175,12 +176,12 @@ class WordWolf {
                 for (player in playerList) {
                     player.showTitle(title)
                 }
+                playerBar!!.removeAll()
+                wolfBar!!.removeAll()
+
                 for (player in Bukkit.getOnlinePlayers()) {
                     player.sendMessage(Component.text("워드울프 게임이 종료되었습니다!", NamedTextColor.RED))
                 }
-
-                playerBossBar.removeAll()
-                wolfBossBar.removeAll()
             } else if (target == "vote") {
                 for (player in Bukkit.getOnlinePlayers()) {
                     player.sendMessage(Component.text("투표가 종료되었습니다!", NamedTextColor.YELLOW))

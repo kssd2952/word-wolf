@@ -18,4 +18,5 @@ class Main : JavaPlugin() {
 fun main() {
 //    print(WordWolf.gameRules["asd"])
 //    print("1".toInt())
+//    print("helloworld")
 }

@@ -139,11 +139,12 @@ class WWCommands : CommandExecutor {
                 gameRules["wolfSelfAware"] = "true" //울프는 본인이 라이어인 것을 알고 시작하는가?
                 gameRules["wolfCount"] = "1" //울프는 총 몇 명인가?
                 gameRules["wordTopic"] = "RANDOM" //단어의 주제는 무엇인가?
-                gameRules["wolfWordRelated"] = "true" //울프의 단어는 타 플레이어들의 것과 주제가 같은가?
-                gameRules["maxRounds"] = "INF" //최대 몇 번의 투표가 진행되는가?
+                gameRules["wolfWordRelated"] = "true" //울프의 단어는 플레이어들의 것과 주제가 같은가?
+                gameRules["maxRounds"] = "6" //최대 몇 번의 투표가 진행되는가?
                 gameRules["wolfCanGuess"] = "true" //울프가 발각되었을 때 단어를 맞출 수 있는가?
                 gameRules["debugMode"] = "false" //개발 테스트용 디버그 모드
                 gameRules["voteTime"] = "40" //투표 시간 (단위: 초)
+                gameRules["oneChance"] = "false" //투표에서 울프를 맞추지 못할 시 게임이 종료되는가?
 
                 topics["sports"] = listOf("축구", "농구", "야구", "테니스", "배구", "골프", "권투", "수영", "배드민턴", "하키", "럭비", "스키")
                 topics["instruments"] =

@@ -30,12 +30,8 @@ class WWTabCompleter : TabCompleter {
 
             3 -> if (args[0] == "rules") {
                 when (args[1]) {
-                    "wolfSelfAware", "wolfWordRelated", "wolfCanGuess", "debugMode" -> {
+                    "wolfSelfAware", "wolfWordRelated", "wolfCanGuess", "debugMode", "oneChance" -> {
                         listOf("true", "false").filter { it.startsWith(args[2], ignoreCase = true) }.toMutableList()
-                    }
-
-                    "maxRounds" -> {
-                        listOf("INF").filter { it.startsWith(args[2], ignoreCase = true) }.toMutableList()
                     }
 
                     "wordTopic" -> {
