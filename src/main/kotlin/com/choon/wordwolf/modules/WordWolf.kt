@@ -6,11 +6,13 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
+import org.bukkit.boss.BarColor
+import org.bukkit.boss.BarStyle
+import org.bukkit.boss.BossBar
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.annotations.NotNull
 import java.time.Duration
-
 
 class WordWolf {
     companion object {
@@ -24,6 +26,17 @@ class WordWolf {
 
         val topicNames: List<String> = listOf(
             "sports", "instruments", "foods", "animals", "jobs", "fruits", "countries", "colors", "cities", "subjects"
+        )
+
+        var playerBossBar: BossBar = Bukkit.createBossBar(
+            "temp",
+            BarColor.GREEN,
+            BarStyle.SEGMENTED_10
+        )
+        var wolfBossBar: BossBar = Bukkit.createBossBar(
+            "temp",
+            BarColor.GREEN,
+            BarStyle.SEGMENTED_10
         )
 
         fun startGame() {
@@ -110,6 +123,30 @@ class WordWolf {
             for (player in Bukkit.getOnlinePlayers()) {
                 player.sendMessage(Component.text("워드울프 게임이 시작되었습니다!", NamedTextColor.GREEN))
             }
+
+            playerBossBar = Bukkit.createBossBar(
+                "게임이 시작되었습니다! 당신의 단어: $playerWord",
+                BarColor.GREEN,
+                BarStyle.SEGMENTED_10
+            )
+
+            wolfBossBar = Bukkit.createBossBar(
+                "게임이 시작되었습니다! 당신의 단어: $wolfWord",
+                if (gameRules["wolfSelfAware"] == "true") {
+                    BarColor.RED
+                } else {
+                    BarColor.GREEN
+                },
+                BarStyle.SEGMENTED_10
+            )
+
+            for (player in playerList) {
+                if (wolfList.contains(player)) {
+                    wolfBossBar.addPlayer(player)
+                } else {
+                    playerBossBar.addPlayer(player)
+                }
+            }
         }
 
         fun gameVote() {
@@ -141,6 +178,9 @@ class WordWolf {
                 for (player in Bukkit.getOnlinePlayers()) {
                     player.sendMessage(Component.text("워드울프 게임이 종료되었습니다!", NamedTextColor.RED))
                 }
+
+                playerBossBar.removeAll()
+                wolfBossBar.removeAll()
             } else if (target == "vote") {
                 for (player in Bukkit.getOnlinePlayers()) {
                     player.sendMessage(Component.text("투표가 종료되었습니다!", NamedTextColor.YELLOW))
