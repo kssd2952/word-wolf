@@ -93,18 +93,18 @@ class WWCommands : CommandExecutor {
             }
 
             "start" -> {
-                if(!WordWolf.firstSetted){
+                if (!WordWolf.firstSetted) {
                     sender.sendMessage("/ww set 커맨드를 먼저 입력해주세요")
-                }else if (WordWolf.isGameStarted) {
+                } else if (WordWolf.isGameStarted) {
                     sender.sendMessage("게임이 이미 시작되었습니다")
                 } else if (gameRules["debugMode"] == "true") {
                     WordWolf.isGameStarted = true
                     WordWolf.startGame()
+                } else if (playerList.size < 3) {
+                    sender.sendMessage("참여 인원이 너무 적습니다")
                 } else if (playerList.size <= gameRules.getOrDefault("wolfCount", "1").toInt()) {
                     gameRules["wolfCount"] = "1"
                     sender.sendMessage("설정된 울프의 수가 플레이어 수 이상입니다")
-                } else if (playerList.size < 3) {
-                    sender.sendMessage("참여 인원이 너무 적습니다")
                 } else {
                     WordWolf.isGameStarted = true
                     WordWolf.startGame()
