@@ -157,7 +157,9 @@ class WordWolf {
                 BarColor.YELLOW,
                 BarStyle.SEGMENTED_10
             )
-
+            for(player in playerList) {
+                voteBar!!.addPlayer(player)
+            }
 
             for (player in Bukkit.getOnlinePlayers()) {
                 player.sendMessage(
@@ -178,6 +180,7 @@ class WordWolf {
                 }
                 playerBar!!.removeAll()
                 wolfBar!!.removeAll()
+                voteBar!!.removeAll()
 
                 for (player in Bukkit.getOnlinePlayers()) {
                     player.sendMessage(Component.text("워드울프 게임이 종료되었습니다!", NamedTextColor.RED))
