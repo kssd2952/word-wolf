@@ -143,6 +143,7 @@ class WWCommands : CommandExecutor {
                 gameRules["maxRounds"] = "INF" //최대 몇 번의 투표가 진행되는가?
                 gameRules["wolfCanGuess"] = "true" //울프가 발각되었을 때 단어를 맞출 수 있는가?
                 gameRules["debugMode"] = "false" //개발 테스트용 디버그 모드
+                gameRules["voteTime"] = "40" //투표 시간 (단위: 초)
 
                 topics["sports"] = listOf("축구", "농구", "야구", "테니스", "배구", "골프", "권투", "수영", "배드민턴", "하키", "럭비", "스키")
                 topics["instruments"] =

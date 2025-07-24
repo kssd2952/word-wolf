@@ -49,7 +49,7 @@ class WordWolf {
                             "당신의 단어는", NamedTextColor.GRAY
                         ).append(
                             Component.text(
-                                "${wolfWord}", NamedTextColor.RED
+                                "${wolfWord}", NamedTextColor.BLUE
                             )
                         ).append(
                             Component.text(
@@ -58,7 +58,7 @@ class WordWolf {
                         )
 
                         val title = Title.title(
-                            Component.text("당신은 울프입니다!", NamedTextColor.GREEN), subTitle, Title.Times.times(
+                            Component.text("당신은 울프입니다!", NamedTextColor.RED), subTitle, Title.Times.times(
                                 Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(500)
                             )
                         )
@@ -68,7 +68,7 @@ class WordWolf {
                             "당신의 단어는", NamedTextColor.GRAY
                         ).append(
                             Component.text(
-                                "${playerWord}", NamedTextColor.GREEN
+                                "${playerWord}", NamedTextColor.BLUE
                             )
                         ).append(
                             Component.text(
@@ -108,7 +108,7 @@ class WordWolf {
             }
 
             for (player in Bukkit.getOnlinePlayers()) {
-                player.sendMessage(Component.text("워드울프 게임이 시작되었습니다!", NamedTextColor.RED))
+                player.sendMessage(Component.text("워드울프 게임이 시작되었습니다!", NamedTextColor.GREEN))
             }
         }
 
