@@ -17,13 +17,13 @@ class WordWolf {
         var isGameStarted: Boolean = false
         var isVoteStarted: Boolean = false
 
-        val topicList: List<String> = listOf(
+        val topicNames: List<String> = listOf(
             "sports", "instruments", "foods", "animals", "jobs", "fruits", "countries", "colors", "cities", "subjects"
         )
 
         fun startGame() {
             val wordList: List<String>? = if (gameRules["wordTopic"] == "RANDOM") {
-                topics[topicList[(Math.random() * topicList.size).toInt()]]
+                topics[topicNames[(Math.random() * topicNames.size).toInt()]]
             } else {
                 topics[gameRules["wordTopic"]]
             }
@@ -34,12 +34,12 @@ class WordWolf {
                 wolfWord = wordList?.get((Math.random() * wordList.size).toInt())
             }
 
+            val title = Title.title(
+                Component.text("당신은 시민입니다!", NamedTextColor.GREEN),
+                Component.text("당신의 단어는 ${playerWord}입니다", NamedTextColor.GRAY),
+                Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(500))
+            )
             for (player in playerList) {
-                val title = Title.title(
-                    Component.text("당신은 시민입니다!", NamedTextColor.GREEN),
-                    Component.text("당신의 단어는 ${playerWord}입니다", NamedTextColor.GRAY),
-                    Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(500))
-                )
                 player.showTitle(title)
             }
         }
@@ -62,6 +62,7 @@ class WordWolf {
         gameRules["wolfWordRelated"] = "true" //울프의 단어는 타 플레이어들의 것과 주제가 같은가?
         gameRules["maxRounds"] = "6" //최대 몇 번의 투표가 진행되는가?
         gameRules["wolfCanGuess"] = "true" //울프가 발각되었을 때 단어를 맞출 수 있는가?
+        gameRules["debugMode"] = "false" //개발 테스트용 디버그 모드
 
         topics["sports"] = listOf("축구", "농구", "야구", "테니스", "배구", "골프", "권투", "수영", "배드민턴", "하키", "럭비", "스키")
         topics["instruments"] =
