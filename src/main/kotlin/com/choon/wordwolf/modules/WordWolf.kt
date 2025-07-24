@@ -3,8 +3,10 @@ package com.choon.wordwolf.modules
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.title.Title
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
+import org.jetbrains.annotations.NotNull
 import java.time.Duration
 
 
@@ -14,6 +16,7 @@ class WordWolf {
         val gameRules = mutableMapOf<String, String>()
         val topics = mutableMapOf<String, List<String>>()
 
+        var firstSetted: Boolean = false
         var isGameStarted: Boolean = false
         var isVoteStarted: Boolean = false
 
@@ -36,20 +39,49 @@ class WordWolf {
 
             val title = Title.title(
                 Component.text("당신은 시민입니다!", NamedTextColor.GREEN),
-                Component.text("당신의 단어는 ${playerWord}입니다", NamedTextColor.GRAY),
+                Component.text("당신의 단어는 ${playerWord}입니다!", NamedTextColor.GRAY),
                 Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(500))
             )
             for (player in playerList) {
                 player.showTitle(title)
             }
+            for (player in Bukkit.getOnlinePlayers()) {
+                player.sendMessage("워드울프 게임이 시작되었습니다!")
+            }
         }
 
         fun gameVote() {
-
+            val title = Title.title(
+                Component.text("투표 시간입니다!", NamedTextColor.GREEN),
+                Component.text("제일 의심가는 플레이어를 때려주세요", NamedTextColor.GRAY),
+                Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(500))
+            )
+            for (player in playerList) {
+                player.showTitle(title)
+            }
+            for (player in Bukkit.getOnlinePlayers()) {
+                player.sendMessage("투표가 시작되었습니다!")
+            }
         }
 
         fun gameStop(target: String) {
-
+            if (target == "game") {
+                val title = Title.title(
+                    Component.text("게임이 종료되었습니다!", NamedTextColor.GREEN),
+                    Component.text("울프 이름", NamedTextColor.GRAY),
+                    Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(500))
+                )
+                for (player in playerList) {
+                    player.showTitle(title)
+                }
+                for (player in Bukkit.getOnlinePlayers()) {
+                    player.sendMessage("워드울프 게임이 종료되었습니다!")
+                }
+            } else if (target == "vote") {
+                for (player in Bukkit.getOnlinePlayers()) {
+                    player.sendMessage("투표가 종료되었습니다!")
+                }
+            }
         }
     }
 }

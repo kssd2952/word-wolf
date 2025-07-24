@@ -5,6 +5,7 @@ import com.choon.wordwolf.modules.WordWolf.Companion.gameRules
 import com.choon.wordwolf.modules.WordWolf.Companion.playerList
 import com.choon.wordwolf.modules.WordWolf.Companion.topics
 import org.bukkit.Bukkit
+import org.bukkit.Server
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -92,13 +93,18 @@ class WWCommands : CommandExecutor {
             }
 
             "start" -> {
-                if (WordWolf.isGameStarted) {
+                if(!WordWolf.firstSetted){
+                    sender.sendMessage("/ww set 커맨드를 먼저 입력해주세요")
+                }else if (WordWolf.isGameStarted) {
                     sender.sendMessage("게임이 이미 시작되었습니다")
                 } else if (gameRules["debugMode"] == "true") {
                     WordWolf.isGameStarted = true
                     WordWolf.startGame()
                 } else if (playerList.size <= gameRules.getOrDefault("wolfCount", "1").toInt()) {
+                    gameRules["wolfCount"] = "1"
                     sender.sendMessage("설정된 울프의 수가 플레이어 수 이상입니다")
+                } else if (playerList.size < 3) {
+                    sender.sendMessage("참여 인원이 너무 적습니다")
                 } else {
                     WordWolf.isGameStarted = true
                     WordWolf.startGame()
@@ -131,12 +137,11 @@ class WWCommands : CommandExecutor {
 
             "set" -> {
                 //기본 gameRules
-                gameRules["wolfSelfAware"] = "false" //울프는 본인이 라이어인 것을 알고 시작하는가?
-                gameRules["oneTurnGame"] = "false" //한 번의 투표 후 게임이 종료되는가?
+                gameRules["wolfSelfAware"] = "true" //울프는 본인이 라이어인 것을 알고 시작하는가?
                 gameRules["wolfCount"] = "1" //울프는 총 몇 명인가?
                 gameRules["wordTopic"] = "RANDOM" //단어의 주제는 무엇인가?
                 gameRules["wolfWordRelated"] = "true" //울프의 단어는 타 플레이어들의 것과 주제가 같은가?
-                gameRules["maxRounds"] = "6" //최대 몇 번의 투표가 진행되는가?
+                gameRules["maxRounds"] = "INF" //최대 몇 번의 투표가 진행되는가?
                 gameRules["wolfCanGuess"] = "true" //울프가 발각되었을 때 단어를 맞출 수 있는가?
                 gameRules["debugMode"] = "false" //개발 테스트용 디버그 모드
 
@@ -168,6 +173,9 @@ class WWCommands : CommandExecutor {
                 topics["cities"] = listOf("서울", "도쿄", "뉴욕", "파리", "런던", "베이징", "시드니", "베를린", "마드리드", "로마", "모스크바", "방콕")
                 topics["subjects"] =
                     listOf("수학", "과학", "역사", "영어", "지리", "미술", "음악", "물리", "화학", "생물", "철학", "경제", "도덕")
+
+                WordWolf.firstSetted = true
+                sender.sendMessage("게임을 기본 설정으로 변경했습니다")
             }
 
             else -> {

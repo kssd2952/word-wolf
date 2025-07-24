@@ -15,11 +15,9 @@ class WWTabCompleter : TabCompleter {
         return when (args.size) {
             1 -> listOf("join", "leave", "list", "rules", "start", "stop", "vote", "set").filter {
                 it.startsWith(
-                    args[0],
-                    ignoreCase = true
+                    args[0], ignoreCase = true
                 )
-            }
-                .toMutableList()
+            }.toMutableList()
 
             2 -> when (args[0]) {
                 "join", "leave" -> Bukkit.getOnlinePlayers().map { it.name }
@@ -32,10 +30,12 @@ class WWTabCompleter : TabCompleter {
 
             3 -> if (args[0] == "rules") {
                 when (args[1]) {
-                    "wolfSelfAware", "oneTurnGame", "wolfWordRelated", "wolfCanGuess", "debugMode" -> {
-                        listOf("true", "false")
-                            .filter { it.startsWith(args[2], ignoreCase = true) }
-                            .toMutableList()
+                    "wolfSelfAware", "wolfWordRelated", "wolfCanGuess", "debugMode" -> {
+                        listOf("true", "false").filter { it.startsWith(args[2], ignoreCase = true) }.toMutableList()
+                    }
+
+                    "maxRounds" -> {
+                        listOf("INF").filter { it.startsWith(args[2], ignoreCase = true) }.toMutableList()
                     }
 
                     "wordTopic" -> {
