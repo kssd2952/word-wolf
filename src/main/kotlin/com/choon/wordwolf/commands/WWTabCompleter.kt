@@ -13,7 +13,7 @@ class WWTabCompleter : TabCompleter {
         if (command.name != "ww") return null
 
         return when (args.size) {
-            1 -> listOf("join", "leave", "list", "rules", "start", "stop", "vote").filter {
+            1 -> listOf("join", "leave", "list", "rules", "start", "stop", "vote", "set").filter {
                 it.startsWith(
                     args[0],
                     ignoreCase = true
