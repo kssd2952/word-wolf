@@ -1,6 +1,6 @@
 name: wordwolf
 main: com.choon.wordwolf.Main
-version: 0.1.3
+version: 0.1.4
 api-version: 1.21
 
 commands:

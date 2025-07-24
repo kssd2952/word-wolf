@@ -120,7 +120,6 @@ class WWCommands : CommandExecutor {
                     WordWolf.gameStop("game")
                 } else {
                     sender.sendMessage("게임이나 투표가 시작되지 않았습니다")
-                    return true
                 }
             }
 
