@@ -107,22 +107,8 @@ class WordWolf {
                 }
             }
 
-
-            val title = Title.title(
-                Component.text("당신은 시민입니다!", NamedTextColor.GREEN),
-
-
-//                    Component.text("게임이 ", NamedTextColor.YELLOW)
-//            .append(Component.text("시작됩니다!", NamedTextColor.RED))
-
-                Component.text("당신의 단어는 ${playerWord}입니다!", NamedTextColor.GRAY),
-                Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(500))
-            )
-            for (player in playerList) {
-                player.showTitle(title)
-            }
             for (player in Bukkit.getOnlinePlayers()) {
-                player.sendMessage("워드울프 게임이 시작되었습니다!")
+                player.sendMessage(Component.text("워드울프 게임이 시작되었습니다!", NamedTextColor.RED))
             }
         }
 
@@ -153,11 +139,11 @@ class WordWolf {
                     player.showTitle(title)
                 }
                 for (player in Bukkit.getOnlinePlayers()) {
-                    player.sendMessage("워드울프 게임이 종료되었습니다!")
+                    player.sendMessage(Component.text("워드울프 게임이 종료되었습니다!", NamedTextColor.RED))
                 }
             } else if (target == "vote") {
                 for (player in Bukkit.getOnlinePlayers()) {
-                    player.sendMessage("투표가 종료되었습니다!")
+                    player.sendMessage(Component.text("투표가 종료되었습니다!", NamedTextColor.YELLOW))
                 }
             }
         }
