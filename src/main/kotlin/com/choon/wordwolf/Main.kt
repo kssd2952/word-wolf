@@ -8,7 +8,7 @@ import org.w3c.dom.events.EventListener
 
 class Main : JavaPlugin() {
     override fun onEnable() {
-        logger.info("Wordwolf 0.1.0 enabled")
+        logger.info("Wordwolf enabled")
 
         getCommand("ww")?.setExecutor(WWCommands())
         getCommand("ww")?.tabCompleter = WWTabCompleter()
